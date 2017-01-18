@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    
+<!--
+    <script>
+    $(function(){
+        $.ajax ({
+            url:"http://api.openweathermap.org/data/2.5/weather?q=Taipei,tw&appid=26063538aebc577159a70bb71e7cebe5&units=metric",
+            dataType: "json",
+            success:function(e){
+                console.log(e.coord.lon);
+                console.log(e.name);
+                console.log(e.main.temp);
+                console.log(e.weather[0].description);
+                $(".city").text(e.name);
+                $(".temp").text(e.main.temp);
+                $(".description").text(e.weather[0].description);
+            },
+            error:function(){
+                console.log("Ajax Error");
+                alert("Error");
+            },
+        });
+    })
+    </script>
+-->
+   <script>
+   $(function(){
+    $.ajax({
+        url:"http://api.openweathermap.org/data/2.5/forecast/daily?q=Taipei,tw&units=metric&cnt=7&appid=26063538aebc577159a70bb71e7cebe5",
+        dataType:"json",
+        success:function(f){
+            $(".container").append(f.city.name);
+            $(f.list).each(function(){
+//                $(".container").append(this.weather[0].main);
+                
+                var c = "<div class ='date'>Date:" + this.dt + "</div>"
+                c += "<div class = 'temp'>Temperature:" + this.temp.day + "</div>"
+                c += "<div class = 'weather'>Weather:" + this.weather[0].description + "</div>"
+                c += "<div class = 'icon'>Icon:" + this.weather[0].icon + "</div><hr>"
+                
+                $(".container").append(c);
+            });
+        },
+        error:function(){
+            console.log("Error");
+        }
+    })
+   })
+     
+    </script>
+       
+</head>
+<body>
+    
+<!--
+   <div class="container">
+       <div class="city"></div>
+       <div class="temp"></div>
+       <div class="description"></div>
+   </div>
+-->
+
+   <div class="container"></div>
+    
+    
+</body>
+</html>
